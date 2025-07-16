@@ -1,0 +1,281 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Card,
+  CardContent,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  FormHelperText,
+  Alert,
+  IconButton,
+  Stack,
+  Divider,
+  Paper
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import { MovieService } from '../../services/movieService';
+import { CreateMovieRequest } from '../../types';
+
+const AddMovie: React.FC = () => {
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm<CreateMovieRequest>({
+    defaultValues: {
+      title: '',
+      description: '',
+      duration: 90,
+      availableSeats: 50,
+      showDateTimes: [{ date: '', time: '' }]
+    }
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'showDateTimes'
+  });
+
+  const onSubmit = async (data: CreateMovieRequest) => {
+    try {
+      setIsSubmitting(true);
+      setErrorMessage(null);
+      
+      // Validate future dates
+      const now = new Date();
+      const allDatesValid = data.showDateTimes.every(show => {
+        const showDateTime = new Date(`${show.date}T${show.time}`);
+        return showDateTime > now;
+      });
+
+      if (!allDatesValid) {
+        setErrorMessage('All show dates and times must be in the future');
+        setIsSubmitting(false);
+        return;
+      }
+      
+      await MovieService.create(data);
+      reset();
+      navigate('/movies');
+    } catch (error) {
+      console.error('Error adding movie:', error);
+      setErrorMessage('Failed to add movie. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <Box sx={{ mb: 4 }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h5" gutterBottom>
+          Add New Movie
+        </Typography>
+        <Divider sx={{ mb: 3 }} />
+        
+        {errorMessage && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {errorMessage}
+          </Alert>
+        )}        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+          <Grid container spacing={3} component="div">
+            <Grid component="div" item xs={12}>
+              <Controller
+                name="title"
+                control={control}
+                rules={{ required: 'Movie title is required' }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Movie Title"
+                    fullWidth
+                    required
+                    error={!!errors.title}
+                    helperText={errors.title?.message}
+                  />
+                )}
+              />
+            </Grid>
+            
+            <Grid item xs={12}>
+              <Controller
+                name="description"
+                control={control}
+                rules={{ required: 'Description is required' }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Description"
+                    fullWidth
+                    required
+                    multiline
+                    rows={4}
+                    error={!!errors.description}
+                    helperText={errors.description?.message}
+                  />
+                )}              />
+            </Grid>
+            
+            <Grid component="div" item xs={12} md={6}>
+              <Controller
+                name="duration"
+                control={control}
+                rules={{ 
+                  required: 'Duration is required',
+                  min: {
+                    value: 1,
+                    message: 'Duration must be at least 1 minute'
+                  }
+                }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Duration (minutes)"
+                    type="number"
+                    fullWidth
+                    required
+                    error={!!errors.duration}
+                    helperText={errors.duration?.message}
+                    InputProps={{ inputProps: { min: 1 } }}
+                  />
+                )}              />
+            </Grid>
+            
+            <Grid component="div" item xs={12} md={6}>
+              <Controller
+                name="availableSeats"
+                control={control}
+                rules={{ 
+                  required: 'Available seats is required',
+                  min: {
+                    value: 1,
+                    message: 'Must have at least 1 seat'
+                  }
+                }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Available Seats"
+                    type="number"
+                    fullWidth
+                    required
+                    error={!!errors.availableSeats}
+                    helperText={errors.availableSeats?.message}
+                    InputProps={{ inputProps: { min: 1 } }}
+                  />
+                )}              />
+            </Grid>
+            
+            <Grid component="div" item xs={12}>
+              <Typography variant="h6" sx={{ mb: 2 }}>
+                Show Dates and Times
+              </Typography>
+              
+              {fields.map((field, index) => (
+                <Box 
+                  key={field.id} 
+                  sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 2,
+                    mb: 2,
+                    p: 2,
+                    border: '1px solid #e0e0e0',
+                    borderRadius: 1
+                  }}
+                >
+                  <Controller
+                    name={`showDateTimes.${index}.date`}
+                    control={control}
+                    rules={{ required: 'Date is required' }}
+                    render={({ field }) => (
+                      <FormControl error={!!errors.showDateTimes?.[index]?.date} sx={{ flex: 1 }}>
+                        <InputLabel htmlFor={`date-${index}`}>Date</InputLabel>
+                        <OutlinedInput
+                          {...field}
+                          id={`date-${index}`}
+                          type="date"
+                          label="Date"
+                          fullWidth
+                        />
+                        {errors.showDateTimes?.[index]?.date && (
+                          <FormHelperText>{errors.showDateTimes[index]?.date?.message}</FormHelperText>
+                        )}
+                      </FormControl>
+                    )}
+                  />
+                  
+                  <Controller
+                    name={`showDateTimes.${index}.time`}
+                    control={control}
+                    rules={{ required: 'Time is required' }}
+                    render={({ field }) => (
+                      <FormControl error={!!errors.showDateTimes?.[index]?.time} sx={{ flex: 1 }}>
+                        <InputLabel htmlFor={`time-${index}`}>Time</InputLabel>
+                        <OutlinedInput
+                          {...field}
+                          id={`time-${index}`}
+                          type="time"
+                          label="Time"
+                          fullWidth
+                        />
+                        {errors.showDateTimes?.[index]?.time && (
+                          <FormHelperText>{errors.showDateTimes[index]?.time?.message}</FormHelperText>
+                        )}
+                      </FormControl>
+                    )}
+                  />
+                  
+                  {fields.length > 1 && (
+                    <IconButton onClick={() => remove(index)} color="error">
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
+                </Box>
+              ))}
+              
+              <Button 
+                variant="outlined" 
+                onClick={() => append({ date: '', time: '' })}
+                sx={{ mb: 3 }}
+              >
+                Add Show Time
+              </Button>
+            </Grid>
+          </Grid>
+          
+          <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Adding...' : 'Add Movie'}
+            </Button>
+            <Button 
+              variant="outlined" 
+              onClick={() => navigate('/movies')}
+            >
+              Cancel
+            </Button>
+          </Stack>
+        </Box>
+      </Paper>
+    </Box>
+  );
+};
+
+export default AddMovie;

@@ -1,0 +1,92 @@
+import React from 'react';
+import { Box, Typography, Button, Card, CardContent } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import MovieIcon from '@mui/icons-material/Movie';
+import BookOnlineIcon from '@mui/icons-material/BookOnline';
+import TheatersIcon from '@mui/icons-material/Theaters';
+
+const Home: React.FC = () => {
+  return (
+    <Box sx={{ textAlign: 'center', my: 4 }}>
+      <Typography variant="h3" component="h1" gutterBottom>
+        Movie Booking App
+      </Typography>
+        <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
+        Book movie tickets online for your favorite films
+      </Typography>
+      
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', mx: -2, mb: 6, justifyContent: 'center' }}>
+        <Box sx={{ width: { xs: '100%', sm: '50%', md: '33.33%' }, px: 2, mb: 4 }}>
+          <Card sx={{ height: '100%' }}>
+            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
+              <MovieIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
+              <Typography variant="h5" component="div" gutterBottom>
+                Browse Movies
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+                See what's showing and check movie details
+              </Typography>
+              <Button 
+                variant="contained" 
+                component={RouterLink}
+                to="/movies"
+                sx={{ mt: 'auto' }}
+              >
+                See Movies
+              </Button>
+            </CardContent>
+          </Card>
+        </Box>        
+        <Box sx={{ width: { xs: '100%', sm: '50%', md: '33.33%' }, px: 2, mb: 4 }}>
+          <Card sx={{ height: '100%' }}>
+            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
+              <TheatersIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
+              <Typography variant="h5" component="div" gutterBottom>
+                Add New Movies
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+                Add new movies with show dates and times
+              </Typography>
+              <Button 
+                variant="contained" 
+                component={RouterLink}
+                to="/movies/add"
+                sx={{ mt: 'auto' }}
+              >
+                Add Movie
+              </Button>
+            </CardContent>
+          </Card>
+        </Box>
+        
+        <Grid item xs={12} sm={6} md={4}>
+          <Card sx={{ height: '100%' }}>
+            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
+              <BookOnlineIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
+              <Typography variant="h5" component="div" gutterBottom>
+                View Bookings
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+                See your bookings and manage them
+              </Typography>
+              <Button 
+                variant="contained" 
+                component={RouterLink}
+                to="/bookings"
+                sx={{ mt: 'auto' }}
+              >
+                My Bookings
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+      
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 8 }}>
+        Movie Booking App - A demonstration app for booking movie tickets
+      </Typography>
+    </Box>
+  );
+};
+
+export default Home;
