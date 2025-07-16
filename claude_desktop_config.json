@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "MovieBookingMCP": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "fastmcp",
+        "fastmcp",
+        "run",
+        "C:\\Users\\Administrator\\Desktop\\Project\\BuildingMCPServer\\mcp_server.py"
+      ]
+    }
+  }
+}
