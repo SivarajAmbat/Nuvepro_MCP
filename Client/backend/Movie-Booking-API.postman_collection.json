@@ -1,0 +1,763 @@
+{
+    "info": {
+        "_postman_id": "ef5b7e3d-8b8c-4b4a-8f3e-2d9e3f5c7b1a",
+        "name": "Movie Booking API",
+        "description": "A collection for testing the Movie Booking System API endpoints",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Movies",
+            "item": [
+                {
+                    "name": "Get All Movies",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:3000/api/movies",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000",
+                            "path": [
+                                "api",
+                                "movies"
+                            ]
+                        },
+                        "description": "Get all available movies with their show dates and times"
+                    },
+                    "response": [
+                        {
+                            "name": "Success Response",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": "http://localhost:3000/api/movies"
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "[\n  {\n    \"id\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n    \"title\": \"Inception\",\n    \"description\": \"A thief who steals corporate secrets through dream-sharing technology\",\n    \"duration\": 148,\n    \"showDateTimes\": [\n      { \"date\": \"2025-05-08\", \"time\": \"10:00\" },\n      { \"date\": \"2025-05-08\", \"time\": \"14:00\" },\n      { \"date\": \"2025-05-09\", \"time\": \"18:00\" },\n      { \"date\": \"2025-05-09\", \"time\": \"21:00\" }\n    ],\n    \"availableSeats\": 50\n  }\n]"
+                        }
+                    ]
+                },
+                {
+                    "name": "Get Movie by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:3000/api/movies/:id",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000",
+                            "path": [
+                                "api",
+                                "movies",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "",
+                                    "description": "Movie ID"
+                                }
+                            ]
+                        },
+                        "description": "Get details of a specific movie including show dates and times"
+                    },
+                    "response": [
+                        {
+                            "name": "Success Response",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": "http://localhost:3000/api/movies/2751c42c-edb1-495c-ae59-c431681fe2e6"
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"id\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n  \"title\": \"Inception\",\n  \"description\": \"A thief who steals corporate secrets through dream-sharing technology\",\n  \"duration\": 148,\n  \"showDateTimes\": [\n    { \"date\": \"2025-05-08\", \"time\": \"10:00\" },\n    { \"date\": \"2025-05-08\", \"time\": \"14:00\" },\n    { \"date\": \"2025-05-09\", \"time\": \"18:00\" },\n    { \"date\": \"2025-05-09\", \"time\": \"21:00\" }\n  ],\n  \"availableSeats\": 50\n}"
+                        },
+                        {
+                            "name": "Movie Not Found",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": "http://localhost:3000/api/movies/nonexistent-id"
+                            },
+                            "status": "Not Found",
+                            "code": 404,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Movie not found\"\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Create Movie",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"The Matrix\",\n    \"description\": \"A computer hacker learns about the true nature of reality\",\n    \"duration\": 136,\n    \"showDateTimes\": [\n        { \"date\": \"2025-05-10\", \"time\": \"15:00\" },\n        { \"date\": \"2025-05-10\", \"time\": \"19:30\" },\n        { \"date\": \"2025-05-11\", \"time\": \"14:00\" },\n        { \"date\": \"2025-05-11\", \"time\": \"20:00\" }\n    ],\n    \"availableSeats\": 45\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/api/movies",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000",
+                            "path": [
+                                "api",
+                                "movies"
+                            ]
+                        },
+                        "description": "Create a new movie with show dates, times, and available seats"
+                    },
+                    "response": [
+                        {
+                            "name": "Success Response",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"title\": \"The Matrix\",\n    \"description\": \"A computer hacker learns about the true nature of reality\",\n    \"duration\": 136,\n    \"showDateTimes\": [\n        { \"date\": \"2025-05-10\", \"time\": \"15:00\" },\n        { \"date\": \"2025-05-10\", \"time\": \"19:30\" },\n        { \"date\": \"2025-05-11\", \"time\": \"14:00\" },\n        { \"date\": \"2025-05-11\", \"time\": \"20:00\" }\n    ],\n    \"availableSeats\": 45\n}"
+                                },
+                                "url": "http://localhost:3000/api/movies"
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"id\": \"3751c42c-edb1-495c-ae59-c431681fe2e7\",\n  \"title\": \"The Matrix\",\n  \"description\": \"A computer hacker learns about the true nature of reality\",\n  \"duration\": 136,\n  \"showDateTimes\": [\n    { \"date\": \"2025-05-10\", \"time\": \"15:00\" },\n    { \"date\": \"2025-05-10\", \"time\": \"19:30\" },\n    { \"date\": \"2025-05-11\", \"time\": \"14:00\" },\n    { \"date\": \"2025-05-11\", \"time\": \"20:00\" }\n  ],\n  \"availableSeats\": 45\n}"
+                        },
+                        {
+                            "name": "Bad Request - Missing Fields",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"title\": \"The Matrix\",\n    \"description\": \"A computer hacker learns about the true nature of reality\"\n}"
+                                },
+                                "url": "http://localhost:3000/api/movies"
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Missing required fields\"\n}"
+                        },
+                        {
+                            "name": "Bad Request - Invalid Dates",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"title\": \"The Matrix\",\n    \"description\": \"A computer hacker learns about the true nature of reality\",\n    \"duration\": 136,\n    \"showDateTimes\": [\n        { \"date\": \"2020-05-10\", \"time\": \"15:00\" }\n    ],\n    \"availableSeats\": 45\n}"
+                                },
+                                "url": "http://localhost:3000/api/movies"
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Show dates must be in the future\"\n}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Bookings",
+            "item": [
+                {
+                    "name": "Get All Bookings",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:3000/api/bookings",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000",
+                            "path": [
+                                "api",
+                                "bookings"
+                            ]
+                        },
+                        "description": "Get all bookings with movie details"
+                    },
+                    "response": [
+                        {
+                            "name": "Success Response",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": "http://localhost:3000/api/bookings"
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "[\n  {\n    \"id\": \"4751c42c-edb1-495c-ae59-c431681fe2e8\",\n    \"movieId\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n    \"customerName\": \"John Doe\",\n    \"showDate\": \"2025-05-08\",\n    \"showTime\": \"14:00\",\n    \"numberOfSeats\": 2,\n    \"bookingDate\": \"2025-05-07T14:32:11.234Z\",\n    \"movie\": {\n      \"title\": \"Inception\",\n      \"description\": \"A thief who steals corporate secrets through dream-sharing technology\",\n      \"duration\": 148\n    }\n  }\n]"
+                        }
+                    ]
+                },
+                {
+                    "name": "Get Booking by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:3000/api/bookings/:id",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000",
+                            "path": [
+                                "api",
+                                "bookings",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "",
+                                    "description": "Booking ID"
+                                }
+                            ]
+                        },
+                        "description": "Get details of a specific booking with movie information"
+                    },
+                    "response": [
+                        {
+                            "name": "Success Response",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:3000/api/bookings/4751c42c-edb1-495c-ae59-c431681fe2e8",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "3000",
+                                    "path": [
+                                        "api",
+                                        "bookings",
+                                        "4751c42c-edb1-495c-ae59-c431681fe2e8"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"id\": \"4751c42c-edb1-495c-ae59-c431681fe2e8\",\n  \"movieId\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n  \"customerName\": \"John Doe\",\n  \"showDate\": \"2025-05-08\",\n  \"showTime\": \"14:00\",\n  \"numberOfSeats\": 2,\n  \"bookingDate\": \"2025-05-07T14:32:11.234Z\",\n  \"movie\": {\n    \"title\": \"Inception\",\n    \"description\": \"A thief who steals corporate secrets through dream-sharing technology\",\n    \"duration\": 148\n  }\n}"
+                        },
+                        {
+                            "name": "Booking Not Found",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:3000/api/bookings/nonexistent-id",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "3000",
+                                    "path": [
+                                        "api",
+                                        "bookings",
+                                        "nonexistent-id"
+                                    ]
+                                }
+                            },
+                            "status": "Not Found",
+                            "code": 404,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Booking not found\"\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Create Booking",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"movieId\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n    \"customerName\": \"John Doe\",\n    \"showDate\": \"2025-05-08\",\n    \"showTime\": \"14:00\",\n    \"numberOfSeats\": 2\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/api/bookings",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000",
+                            "path": [
+                                "api",
+                                "bookings"
+                            ]
+                        },
+                        "description": "Create a new booking for a movie"
+                    },
+                    "response": [
+                        {
+                            "name": "Success Response",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"movieId\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n    \"customerName\": \"John Doe\",\n    \"showDate\": \"2025-05-08\",\n    \"showTime\": \"14:00\",\n    \"numberOfSeats\": 2\n}"
+                                },
+                                "url": "http://localhost:3000/api/bookings"
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"id\": \"4751c42c-edb1-495c-ae59-c431681fe2e8\",\n  \"movieId\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n  \"customerName\": \"John Doe\",\n  \"showDate\": \"2025-05-08\",\n  \"showTime\": \"14:00\",\n  \"numberOfSeats\": 2,\n  \"bookingDate\": \"2025-05-07T14:32:11.234Z\",\n  \"movie\": {\n    \"title\": \"Inception\",\n    \"description\": \"A thief who steals corporate secrets through dream-sharing technology\",\n    \"duration\": 148\n  }\n}"
+                        },
+                        {
+                            "name": "Bad Request - Missing Fields",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"movieId\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n    \"customerName\": \"John Doe\"\n}"
+                                },
+                                "url": "http://localhost:3000/api/bookings"
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Missing required fields\"\n}"
+                        },
+                        {
+                            "name": "Bad Request - Invalid Show Time",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"movieId\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n    \"customerName\": \"John Doe\",\n    \"showDate\": \"2025-05-08\",\n    \"showTime\": \"13:00\",\n    \"numberOfSeats\": 2\n}"
+                                },
+                                "url": "http://localhost:3000/api/bookings"
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Invalid show date or time for this movie\"\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Debug Show Date/Time Validation",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:3000/api/bookings/debug/:movieId/:showDate/:showTime",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000",
+                            "path": [
+                                "api",
+                                "bookings",
+                                "debug",
+                                ":movieId",
+                                ":showDate",
+                                ":showTime"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "movieId",
+                                    "value": "2751c42c-edb1-495c-ae59-c431681fe2e6",
+                                    "description": "Movie ID"
+                                },
+                                {
+                                    "key": "showDate",
+                                    "value": "2025-05-08",
+                                    "description": "Show date (YYYY-MM-DD)"
+                                },
+                                {
+                                    "key": "showTime",
+                                    "value": "14:00",
+                                    "description": "Show time (HH:MM)"
+                                }
+                            ]
+                        },
+                        "description": "Debug validation of a show date/time combination for a movie"
+                    },
+                    "response": [
+                        {
+                            "name": "Valid Date/Time",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:3000/api/bookings/debug/2751c42c-edb1-495c-ae59-c431681fe2e6/2025-05-08/14:00",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "3000",
+                                    "path": [
+                                        "api",
+                                        "bookings",
+                                        "debug",
+                                        "2751c42c-edb1-495c-ae59-c431681fe2e6",
+                                        "2025-05-08",
+                                        "14:00"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"movie\": \"Inception\",\n  \"showDateExists\": true,\n  \"availableShowTimes\": [\n    { \"date\": \"2025-05-08\", \"time\": \"10:00\" },\n    { \"date\": \"2025-05-08\", \"time\": \"14:00\" },\n    { \"date\": \"2025-05-09\", \"time\": \"18:00\" },\n    { \"date\": \"2025-05-09\", \"time\": \"21:00\" }\n  ],\n  \"requestedDate\": \"2025-05-08\",\n  \"requestedTime\": \"14:00\"\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Update Booking Date/Time",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"showDate\": \"2025-05-09\",\n    \"showTime\": \"18:00\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:3000/api/bookings/:id",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000",
+                            "path": [
+                                "api",
+                                "bookings",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "",
+                                    "description": "Booking ID"
+                                }
+                            ]
+                        },
+                        "description": "Change the date and/or time of an existing booking"
+                    },
+                    "response": [
+                        {
+                            "name": "Success Response",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"showDate\": \"2025-05-09\",\n    \"showTime\": \"18:00\"\n}"
+                                },
+                                "url": {
+                                    "raw": "http://localhost:3000/api/bookings/4751c42c-edb1-495c-ae59-c431681fe2e8",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "3000",
+                                    "path": [
+                                        "api",
+                                        "bookings",
+                                        "4751c42c-edb1-495c-ae59-c431681fe2e8"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"id\": \"4751c42c-edb1-495c-ae59-c431681fe2e8\",\n  \"movieId\": \"2751c42c-edb1-495c-ae59-c431681fe2e6\",\n  \"customerName\": \"John Doe\",\n  \"showDate\": \"2025-05-09\",\n  \"showTime\": \"18:00\",\n  \"numberOfSeats\": 2,\n  \"bookingDate\": \"2025-05-07T14:32:11.234Z\",\n  \"movie\": {\n    \"title\": \"Inception\",\n    \"description\": \"A thief who steals corporate secrets through dream-sharing technology\",\n    \"duration\": 148\n  }\n}"
+                        },
+                        {
+                            "name": "Bad Request - Nothing to Update",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}"
+                                },
+                                "url": {
+                                    "raw": "http://localhost:3000/api/bookings/4751c42c-edb1-495c-ae59-c431681fe2e8",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "3000",
+                                    "path": [
+                                        "api",
+                                        "bookings",
+                                        "4751c42c-edb1-495c-ae59-c431681fe2e8"
+                                    ]
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Show date or time is required\"\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Cancel Booking",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:3000/api/bookings/:id",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3000",
+                            "path": [
+                                "api",
+                                "bookings",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "",
+                                    "description": "Booking ID"
+                                }
+                            ]
+                        },
+                        "description": "Cancel a booking and return seats to available pool"
+                    },
+                    "response": [
+                        {
+                            "name": "Success Response",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:3000/api/bookings/4751c42c-edb1-495c-ae59-c431681fe2e8",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "3000",
+                                    "path": [
+                                        "api",
+                                        "bookings",
+                                        "4751c42c-edb1-495c-ae59-c431681fe2e8"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Booking cancelled successfully\"\n}"
+                        },
+                        {
+                            "name": "Booking Not Found",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:3000/api/bookings/nonexistent-id",
+                                    "protocol": "http",
+                                    "host": [
+                                        "localhost"
+                                    ],
+                                    "port": "3000",
+                                    "path": [
+                                        "api",
+                                        "bookings",
+                                        "nonexistent-id"
+                                    ]
+                                }
+                            },
+                            "status": "Not Found",
+                            "code": 404,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"message\": \"Booking not found\"\n}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
